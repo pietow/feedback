@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kursteilnehmer-Feedback · Piet · 2025/26</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #e84545;
+    --gold: #f0a500;
+    --soft: #f5f2ee;
+    --mid: #6b6b7b;
+    --white: #ffffff;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--soft);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    background: var(--ink);
+    color: var(--white);
+    padding: 3.5rem 4rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '❝';
+    position: absolute;
+    right: 3rem; top: -1rem;
+    font-size: 14rem;
+    color: rgba(255,255,255,.04);
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .header-label {
+    font-size: .7rem; font-weight: 700;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: .6rem;
+  }
+  .header-label::before { content:''; display:block; width:28px; height:2px; background:var(--accent); }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    max-width: 640px;
+    margin-bottom: .8rem;
+  }
+  .page-header h1 em { font-style: italic; color: rgba(255,255,255,.55); }
+  .header-meta {
+    font-size: .82rem; color: rgba(255,255,255,.45);
+    font-weight: 300; letter-spacing: .05em;
+  }
+
+  /* ── HERO NUMBERS ── */
+  .hero-numbers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--accent);
+    color: var(--white);
+  }
+  .num-cell {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,.15);
+    position: relative;
+  }
+  .num-cell:last-child { border-right: none; }
+  .num-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    display: block;
+    margin-bottom: .3rem;
+  }
+  .num-label {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    opacity: .75;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .full-width { grid-column: 1 / -1; }
+
+  /* ── SECTION TITLES ── */
+  .section-label {
+    font-size: .68rem; font-weight: 700;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .section-label::after { content:''; flex:1; height:1px; background: rgba(26,26,46,.12); }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1.8rem 2rem;
+    box-shadow: 0 2px 20px rgba(0,0,0,.06);
+  }
+
+  /* ── RATING BARS ── */
+  .rating-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: .9rem;
+  }
+  .rating-row:last-child { margin-bottom: 0; }
+  .rating-label {
+    font-size: .82rem;
+    color: var(--mid);
+    width: 180px;
+    flex-shrink: 0;
+    line-height: 1.3;
+  }
+  .bar-wrap {
+    flex: 1;
+    height: 8px;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    animation: growBar 1s ease forwards;
+    transform-origin: left;
+  }
+  @keyframes growBar { from { width: 0 !important; } }
+  .bar-pct {
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--ink);
+    width: 38px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ── DONUT ── */
+  .donut-row {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .donut-wrap {
+    position: relative;
+    width: 110px; height: 110px;
+    flex-shrink: 0;
+  }
+  .donut-wrap svg { transform: rotate(-90deg); }
+  .donut-center {
+    position: absolute;
+    inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .donut-center .big { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; }
+  .donut-center .small { font-size: .6rem; text-transform: uppercase; letter-spacing: .08em; color: var(--mid); }
+  .donut-legend { flex: 1; }
+  .legend-item {
+    display: flex; align-items: center; gap: .6rem;
+    margin-bottom: .5rem; font-size: .82rem;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── QUOTES ── */
+  .quote-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .quote-card {
+    background: var(--ink);
+    color: var(--white);
+    border-radius: 10px;
+    padding: 1.4rem 1.5rem;
+    position: relative;
+  }
+  .quote-card.highlight {
+    background: var(--accent);
+    grid-column: 1 / -1;
+  }
+  .quote-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    line-height: .8;
+    color: rgba(255,255,255,.2);
+    display: block;
+    margin-bottom: .5rem;
+  }
+  .quote-text {
+    font-size: .88rem;
+    line-height: 1.65;
+    font-weight: 300;
+    font-style: italic;
+  }
+  .quote-card.highlight .quote-text {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  /* ── PILL CLOUD ── */
+  .pill-cloud { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .pill {
+    background: var(--soft);
+    border: 1.5px solid rgba(26,26,46,.1);
+    border-radius: 50px;
+    padding: .35rem .9rem;
+    font-size: .78rem;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .pill.strong {
+    background: var(--ink);
+    color: var(--white);
+    border-color: var(--ink);
+    font-weight: 700;
+  }
+
+  /* ── 100% BADGE ── */
+  .badge-row { display: flex; gap: .8rem; flex-wrap: wrap; }
+  .badge {
+    display: flex; align-items: center; gap: .5rem;
+    background: var(--soft);
+    border-radius: 8px;
+    padding: .7rem 1rem;
+    flex: 1; min-width: 140px;
+  }
+  .badge-icon { font-size: 1.3rem; }
+  .badge-text { font-size: .78rem; line-height: 1.3; }
+  .badge-text strong { display: block; font-weight: 700; font-size: .85rem; color: var(--ink); }
+  .badge-text span { color: var(--mid); }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    background: var(--ink);
+    color: rgba(255,255,255,.35);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: .75rem;
+    letter-spacing: .05em;
+  }
+  .page-footer strong { color: rgba(255,255,255,.7); }
+
+  @media (max-width: 640px) {
+    .hero-numbers { grid-template-columns: repeat(2,1fr); }
+    .content { grid-template-columns: 1fr; padding: 1.5rem 1rem 3rem; }
+    .quote-grid { grid-template-columns: 1fr; }
+    .quote-card.highlight { grid-column: auto; }
+    .page-header { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="page-header">
+  <div class="header-label">Kursteilnehmer-Feedback</div>
+  <h1>Was Lernende über<br><em>meinen Unterricht</em> sagen</h1>
+  <p class="header-meta">CSS-Kurs Dez 2025 &amp; Web-Dev / React / TypeScript Feb 2026 · 7 Bewertungen · alfatraining</p>
+</header>
+
+<!-- HERO NUMBERS -->
+<div class="hero-numbers">
+  <div class="num-cell">
+    <span class="num-big">5★</span>
+    <span class="num-label">Gesamtzufriedenheit</span>
+  </div>
+  <div class="num-cell">
+    <span class="num-big">100%</span>
+    <span class="num-label">Niveau genau richtig</span>
+  </div>
+  <div class="num-cell">
+    <span class="num-big">7/7</span>
+    <span class="num-label">Alle fühlten sich sicher</span>
+  </div>
+  <div class="num-cell">
+    <span class="num-big">100%</span>
+    <span class="num-label">Erklärungen klar</span>
+  </div>
+</div>
+
+<!-- CONTENT GRID -->
+<main class="content">
+
+  <!-- RATINGS -->
+  <div class="card">
+    <div class="section-label">Bewertungen im Überblick</div>
+    <div class="rating-row">
+      <span class="rating-label">Unterrichtszufriedenheit</span>
+      <div class="bar-wrap"><div class="bar-fill" style="width:93%"></div></div>
+      <span class="bar-pct">93%</span>
+    </div>
+    <div class="rating-row">
+      <span class="rating-label">Lernmaterialien</span>
+      <div class="bar-wrap"><div class="bar-fill" style="width:93%"></div></div>
+      <span class="bar-pct">93%</span>
+    </div>
+    <div class="rating-row">
+      <span class="rating-label">Klarheit der Erklärungen</span>
+      <div class="bar-wrap"><div class="bar-fill" style="width:100%"></div></div>
+      <span class="bar-pct">100%</span>
+    </div>
+    <div class="rating-row">
+      <span class="rating-label">Trainer-Unterstützung</span>
+      <div class="bar-wrap"><div class="bar-fill" style="width:100%"></div></div>
+      <span class="bar-pct">100%</span>
+    </div>
+    <div class="rating-row">
+      <span class="rating-label">Themensicherheit danach</span>
+      <div class="bar-wrap"><div class="bar-fill" style="width:100%"></div></div>
+      <span class="bar-pct">100%</span>
+    </div>
+  </div>
+
+  <!-- DONUT: Niveau -->
+  <div class="card">
+    <div class="section-label">Schwierigkeitsniveau</div>
+    <div class="donut-row">
+      <div class="donut-wrap">
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="42" fill="none" stroke="#eee" stroke-width="14"/>
+          <circle cx="55" cy="55" r="42" fill="none" stroke="var(--accent)" stroke-width="14"
+            stroke-dasharray="264 0" stroke-linecap="round"/>
+        </svg>
+        <div class="donut-center">
+          <span class="big">7/7</span>
+          <span class="small">Stimmen</span>
+        </div>
+      </div>
+      <div class="donut-legend">
+        <div class="legend-item"><span class="dot" style="background:var(--accent)"></span>Genau richtig – 7 von 7</div>
+        <div class="legend-item" style="opacity:.35"><span class="dot" style="background:#eee"></span>Zu schwer – 0</div>
+        <div class="legend-item" style="opacity:.35"><span class="dot" style="background:#eee"></span>Zu leicht – 0</div>
+        <br>
+        <p style="font-size:.78rem;color:var(--mid);line-height:1.5">Alle 7 Teilnehmer empfanden das Kursniveau als <strong style="color:var(--ink)">genau richtig</strong> – ein klares Zeichen für differenzierten Unterricht.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIGHLIGHT QUOTE -->
+  <div class="full-width">
+    <div class="section-label">Stimmen der Teilnehmer</div>
+    <div class="quote-grid">
+      <div class="quote-card highlight">
+        <span class="quote-mark">❝</span>
+        <p class="quote-text">Piet gehört für mich definitiv zu den besten Dozenten der alfatraining – fachlich extrem kompetent, didaktisch stark und immer motivierend. 5-Sterne!</p>
+      </div>
+      <div class="quote-card">
+        <span class="quote-mark">❝</span>
+        <p class="quote-text">Besonders gut war die fachliche Kompetenz und die Fähigkeit, komplexe technische Zusammenhänge verständlich darzustellen. Man hatte das Gefühl, dass echtes Praxiswissen vermittelt wird.</p>
+      </div>
+      <div class="quote-card">
+        <span class="quote-mark">❝</span>
+        <p class="quote-text">Empathisch und verständnisvoll auf die unterschiedlichen Fragen eingegangen. Wiederholungen vom Vortag sinnvoll und gut aufbereitet.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STÄRKEN -->
+  <div class="card">
+    <div class="section-label">Genannte Stärken</div>
+    <div class="pill-cloud">
+      <span class="pill">Live-Coding</span>
+      <span class="pill">Praxisnähe</span>
+      <span class="pill">Geduld bei Fragen</span>
+      <span class="pill">Klare Struktur</span>
+      <span class="pill">„Warum" erklären, nicht nur „Wie"</span>
+      <span class="pill">Individuelle Betreuung</span>
+      <span class="pill">Angenehme Atmosphäre</span>
+      <span class="pill">Wiederholungen des Vortags</span>
+      <span class="pill">Echtes Praxiswissen</span>
+    </div>
+  </div>
+
+  <!-- BADGES -->
+  <div class="card">
+    <div class="section-label">Besondere Ergebnisse</div>
+    <div class="badge-row">
+      <div class="badge">
+        <span class="badge-icon">🎯</span>
+        <div class="badge-text">
+          <strong>100% Niveau-Treffer</strong>
+          <span>Kein Teilnehmer fand es zu leicht oder zu schwer</span>
+        </div>
+      </div>
+      <div class="badge">
+        <span class="badge-icon">🧠</span>
+        <div class="badge-text">
+          <strong>100% fühlen sich sicher</strong>
+          <span>Alle Teilnehmer verließen den Kurs mit Themensicherheit</span>
+        </div>
+      </div>
+    </div>
+    <div class="badge-row" style="margin-top:.8rem">
+      <div class="badge">
+        <span class="badge-icon">💬</span>
+        <div class="badge-text">
+          <strong>Immer ansprechbar</strong>
+          <span>Mehrfach explizit hervorgehoben: immer erreichbar und hilfsbereit</span>
+        </div>
+      </div>
+      <div class="badge">
+        <span class="badge-icon">⚡</span>
+        <div class="badge-text">
+          <strong>Live-Coding als Stärke</strong>
+          <span>Von mehreren Teilnehmern als besonders lehrreich bewertet</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="page-footer">
+  Originaldaten: Google-Forms-Feedback · CSS-Kurs Dez 2025 &amp; Web-Dev / React / TypeScript Feb 2026 · Rohdaten auf Anfrage verfügbar
+</footer>
+
+</body>
+</html>
